@@ -4,15 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grade Checker</title>
-  <style>
-    body{
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<style>
+  body{
     margin: 0;
     color: white;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-image:linear-gradient(rgba(49, 49, 49, 0.4), rgba(20, 20, 20,0.3)), url(images/background.gif);
+    background-image: url(images/background.gif);
     background-size: cover;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
-    h1{
+  h1{
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 40px;
@@ -20,18 +22,21 @@
   main{
     display: flex;
     justify-content: center;
+    padding: 20px !important;
     align-items: center;
     height: 100vh;
     gap: 20px;
+    background-image: linear-gradient(rgba(49, 49, 49, 0.4), rgba(20, 20, 20,0.3)), url(images/giphy.gif);
+    background-size: cover;
+
   }
   section{
     background-color: transparent;
-    border: 2px solid white;
-    padding: 40px;
+    border: 2px solid rgba(228, 228, 228, 0.5);
     border-radius: 30px;
+
   }
   input{
-    padding: 14px;
     width: 300px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border: 1px solid rgb(197, 197, 197);
@@ -42,9 +47,8 @@
 
   }
   button{
-    padding: 14px;
-    width: 150px;
-    background-color: rgb(3, 173, 26);
+
+    background-color: rgb(3, 173, 45);
     color: white;
     font-weight: bold;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -53,28 +57,36 @@
 
   }
   div{
-    padding: 20px;
     background-color: transparent;
-    border-radius: 30px;
-    margin-top: 30px;
-    height: 50px;
+    margin-top: 20px;
+    height: 100px;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    border-radius: 10px;
+    font-size: 20px;
+
   }
-  </style>
-</head>
-<body>
-  <main>
-    <section>
-      <h1>Grading System</h1>
+
+  @media screen and (max-width: 475px) {
+    body{
+      overflow-y: hidden;
+    }
     
-      <input type="number" placeholder="Enter a score" id="score" autofocus>
-      <button onclick="checkScore()">Check</button>
-      <div id="scoreboard"></div>
-    </section>
+  }
+
+</style>
+<body>
+  <main class="container-fluid">
+    <nav class="row">
+      <section class="col-lg col-sm p-4 w-100">
+          <h1>Grading System</h1>
+          <input type="number" placeholder="Enter a score" id="score" autofocus class="w-100 mt-2 mb-2 p-2"> 
+          <button onclick="checkScore()" class="w-100 p-2 mt-3">Check</button>
+          <div id="scoreboard"></div>
+      </section>
+    </nav>
   </main>
   
 
@@ -82,34 +94,54 @@
     function checkScore(){
       var result = score.value;
       var pass = "./sounds/use.wav"
-      var pass = "./sounds/use.wav"
-      var pass = "./sounds/use.wav"
+      var wrong = "./sounds/wrong.wav"
+      var correct = "./sounds/bonus.wav"
+      var incorrect = "./sounds/game.wav"
       if(result == "")
       {
+        scoreboard.style.backgroundColor = "grey";
         scoreboard.innerHTML = "You haven't entered a score";
       }
       else if(result < 40 && result >= 0 ){
+        var songOn = new Audio(wrong);
+        songOn.play();
+        scoreboard.style.backgroundColor = "red";
         scoreboard.innerHTML = "FAIL";
       } else if(result >= 40 && result < 45)
       {
+        var songOn = new Audio(wrong);
+        songOn.play();
+        scoreboard.style.backgroundColor = "red";
         scoreboard.innerHTML = "E";
       } else if (result >= 44 && result < 50){
+        var songOn = new Audio(incorrect);
+        songOn.play();
+        scoreboard.style.backgroundColor = "teal";
         scoreboard.innerHTML = "D";
       }else if (result >= 50 && result < 60){
+        var songOn = new Audio(incorrect);
+        songOn.play();
+        scoreboard.style.backgroundColor = "purple";
         scoreboard.innerHTML = "C";
       }else if (result >= 60 && result < 70){
-        var songOn = new Audio(pass);
+        var songOn = new Audio(correct);
         songOn.play();
         scoreboard.style.backgroundColor = "green";
         scoreboard.innerHTML = "B";
       }else if (result >= 70  && result <= 100){
         var songOn = new Audio(pass);
         songOn.play();
-        scoreboard.style.backgroundColor = "green";
+        scoreboard.style.backgroundColor = "goldenrod";
         scoreboard.innerHTML = "A";
       }else if(result < 0){
+        scoreboard.style.backgroundColor = "red";
+        var songOn = new Audio(wrong);
+        songOn.play();
         scoreboard.innerHTML = result + "? This is a negative value, your value should be from 0 - 100 !";
       }else if(result > 100){
+        scoreboard.style.backgroundColor = "red";
+        var songOn = new Audio(wrong);
+        songOn.play();
         scoreboard.innerHTML = result + "? This is a higher value, your value should be from 0 - 100 !";
       }
       }
